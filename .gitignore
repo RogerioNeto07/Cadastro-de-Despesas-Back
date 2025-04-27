@@ -1,0 +1,36 @@
+# Ambiente virtual
+venv/
+.env/
+.venv/
+
+# Configurações do PyCharm / VSCode
+.idea/
+.vscode/
+
+# Compilados do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de banco de dados SQLite
+*.sqlite3
+
+# Mídias enviadas pelo usuário
+/media/
+
+# Arquivos de migração desnecessários (opcional)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Cache do Django
+*.log
+*.pot
+*.pyc
+.DS_Store
+
+# Arquivos de sistema
+Thumbs.db
+desktop.ini
+
+# node_modules caso use npm/yarn no frontend (opcional)
+node_modules/
