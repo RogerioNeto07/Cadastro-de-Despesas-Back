@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 class Despesa(models.Model):
     CATEGORIAS = [
@@ -7,24 +8,30 @@ class Despesa(models.Model):
         ('MERCADO', 'Mercado'),
         ('SAUDE', 'Saúde'),
         ('COMIDA', 'Comida'),
+        ('TRANSPORTE', 'Transporte'),
+        ('EDUCACAO', 'Educação'),
+        ('OUTROS', 'Outros'),
     ]
 
     categoria = models.CharField(
         max_length=20,
         choices=CATEGORIAS,
-        default='CONTAS'
+        default='OUTROS'
     )
-    valor = models.FloatField()
+    descricao = models.CharField(max_length=255)
+    valor = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0.01)]
+    )
     data = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-data', '-created_at']  # Corrigido aqui
+        verbose_name = 'Despesa'
+        verbose_name_plural = 'Despesas'
 
     def __str__(self):
-        return f"{self.get_categoria_display()} - R${self.valor} em {self.data}"
-    
-    def is_grande_gasto(self):
-        '''Retorna true se o valor da despesa é maior ou igual a 100 reais'''
-        return self.valor >= 100
-    
-    def is_economizavel(self):
-        '''Retorna True se a despesa for da categoria Lazer ou Comida.'''
-        return self.categoria in ['LAZER', 'COMIDA']
-    
+        return f"{self.get_categoria_display()} - R${self.valor:.2f} em {self.data.strftime('%d/%m/%Y')}"
