@@ -1,10 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import DespesaViewSet
-
-router = DefaultRouter()
-router.register(r'despesas', DespesaViewSet)
+from django.urls import path
+from .views import DespesaListView, DespesaDetailView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('despesas/', DespesaListView.as_view(), name='despesa-list-create'),
+    path('despesas/<int:pk>/', DespesaDetailView.as_view(), name='despesa-detail'),
 ]
